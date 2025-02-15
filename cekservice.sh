@@ -15,7 +15,7 @@ export NC='\033[0m';
 # // Export Banner Status Information
 export ERROR="[${RED} ERROR ${NC}]";
 export INFO="[${YELLOW} INFO ${NC}]";
-export OKEY="[${GREEN} OKEY ${NC}]";
+export OKEY="[${GREEN} RUNNING ${NC}]";
 export PENDING="[${YELLOW} PENDING ${NC}]";
 export SEND="[${YELLOW} SEND ${NC}]";
 export RECEIVE="[${YELLOW} RECEIVE ${NC}]";
@@ -83,7 +83,7 @@ echo -e "❇️ Nginx               : $NGINX"
 echo -e "❇️ Firewall            : $UFW"
 echo -e "❇️ Marzban Panel       : $MARZ"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
-echo -e "SHARING PORT 443 MARZBAN VERSION AMAN SEMUA BOSSKUH"
+echo -e "MARZBAN MULTIPORT 443 FOR ALL SERVICE"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo ""
 
