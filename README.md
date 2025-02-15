@@ -36,13 +36,9 @@ Credit aplikasi full to [Gozargah Marzban](https://github.com/Gozargah), saya ha
  apt update -y && apt install wget -y && wget --no-check-certificate -qO InstallNET.sh 'https://raw.githubusercontent.com/leitbogioro/Tools/master/Linux_reinstall/InstallNET.sh' && chmod a+x InstallNET.sh && bash InstallNET.sh -ubuntu 20.04
  ```
 
-# Instalasi
+# Instalasi Marzban AIO
  ```html
- apt-get update && apt-get upgrade -y && apt dist-upgrade -y && update-grub && reboot
- ```
-Pastikan anda sudah login sebagai root sebelum menjalankan perintah dibawah
- ```html
- wget https://raw.githubusercontent.com/xsm-syn/MarLing/main/install.sh && chmod +x install.sh && ./install.sh
+ apt-get update && apt-get upgrade -y && apt dist-upgrade -y && update-grub && wget https://raw.githubusercontent.com/xsm-syn/MarLing/main/install.sh && chmod +x install.sh && ./install.sh
  ```
 
 Buka panel Marzban dengan mengunjungi https://domain.com/dashboard <br>
