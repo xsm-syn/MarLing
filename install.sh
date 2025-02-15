@@ -118,22 +118,22 @@ domain=$(cat /etc/data/domain)
 #read -rp "Masukkan Email anda: " email
 
 #username
-#while true; do
-#    read -rp "Masukkan UsernamePanel (hanya huruf dan angka): " userpanel
+while true; do
+    read -rp "Masukkan UsernamePanel (hanya huruf dan angka): " userpanel
 
-#    # Memeriksa apakah userpanel hanya mengandung huruf dan angka
-#    if [[ ! "$userpanel" =~ ^[A-Za-z0-9]+$ ]]; then
-#        echo "UsernamePanel hanya boleh berisi huruf dan angka. Silakan masukkan kembali."
-#    elif [[ "$userpanel" =~ [Aa][Dd][Mm][Ii][Nn] ]]; then
-#        echo "UsernamePanel tidak boleh mengandung kata 'admin'. Silakan masukkan kembali."
-#    else
-#        echo "$userpanel" > /etc/data/userpanel
-#        break
-#    fi
-#done
+    # Memeriksa apakah userpanel hanya mengandung huruf dan angka
+    if [[ ! "$userpanel" =~ ^[A-Za-z0-9]+$ ]]; then
+        echo "UsernamePanel hanya boleh berisi huruf dan angka. Silakan masukkan kembali."
+    elif [[ "$userpanel" =~ [Aa][Dd][Mm][Ii][Nn] ]]; then
+        echo "UsernamePanel tidak boleh mengandung kata 'admin'. Silakan masukkan kembali."
+    else
+        echo "$userpanel" > /etc/data/userpanel
+        break
+    fi
+done
 
-#read -rp "Masukkan Password Panel: " passpanel
-#echo "$passpanel" > /etc/data/passpanel
+read -rp "Masukkan Password Panel: " passpanel
+echo "$passpanel" > /etc/data/passpanel
 
 #Preparation
 clear
@@ -283,24 +283,23 @@ sudo bash /root/warp -y
 apt autoremove -y
 apt clean
 cd /opt/marzban
-#sed -i "s/# SUDO_USERNAME = \"admin\"/SUDO_USERNAME = \"${userpanel}\"/" /opt/marzban/.env
-#sed -i "s/# SUDO_PASSWORD = \"admin\"/SUDO_PASSWORD = \"${passpanel}\"/" /opt/marzban/.env
-#docker compose down && docker compose up -d
+sed -i "s/# SUDO_USERNAME = \"admin\"/SUDO_USERNAME = \"${userpanel}\"/" /opt/marzban/.env
+sed -i "s/# SUDO_PASSWORD = \"admin\"/SUDO_PASSWORD = \"${passpanel}\"/" /opt/marzban/.env
+docker compose down && docker compose up -d
 #marzban cli admin import-from-env -y
 #sed -i "s/SUDO_USERNAME = \"${userpanel}\"/# SUDO_USERNAME = \"admin\"/" /opt/marzban/.env
 #sed -i "s/SUDO_PASSWORD = \"${passpanel}\"/# SUDO_PASSWORD = \"admin\"/" /opt/marzban/.env
 
-docker compose down && docker compose up -d
 cd
-echo "Tunggu 10 detik untuk generate token API"
-sleep 10s
+echo "Tunggu 5 detik untuk generate token API"
+sleep 5s
 
 #instal token
 curl -X 'POST' \
   "https://${domain}/api/admin/token" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d "grant_type=password&username=admin132&password=admin132&scope=&client_id=&client_secret=" > /etc/data/token.json
+  -d "grant_type=password&username=${userpanel}&password=${passpanel}&scope=&client_id=&client_secret=" > /etc/data/token.json
 cd
 
 # restart all service
@@ -323,8 +322,6 @@ echo "Telegram : https://t.me/after_sweet" | tee -a /root/log-install.txt
 echo "-=================================-" | tee -a /root/log-install.txt
 colorized_echo green "Script telah berhasil di install"
 rm /root/mar.sh
-colorized_echo blue "Menghapus admin bawaan db.sqlite"
-marzban cli admin delete -u admin -y
 echo -e "[\e[1;31mWARNING\e[0m] Reboot sekali biar ga error lur [default y](y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
