@@ -229,11 +229,15 @@ sudo apt-get install speedtest -y
 mkdir -p /var/log/nginx
 touch /var/log/nginx/access.log
 touch /var/log/nginx/error.log
-wget -O /opt/marzban/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
-wget -O /opt/marzban/default.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
-wget -O /opt/marzban/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
+apt install nginx -y
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
+wget -O /etc/nginx/sites-available/default "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
+wget -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
+#wget -O /opt/marzban/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
+#wget -O /opt/marzban/default.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
+#wget -O /opt/marzban/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
 mkdir -p /var/www/html
-echo "<pre>Setup by AutoScript LingVPN</pre>" > /var/www/html/index.html
+echo "<pre>Setup by AutoScript LingVPN and Modded by @after_sweet</pre>" > /var/www/html/index.html
 
 #install socat
 apt install iptables -y
@@ -263,7 +267,6 @@ sudo ufw allow https
 sudo ufw allow 8081/tcp
 sudo ufw allow 1080/tcp
 sudo ufw allow 1080/udp
-yes | sudo ufw enable
 
 #install database
 wget -O /var/lib/marzban/db.sqlite3 "https://github.com/GawrAme/MarLing/raw/main/db.sqlite3"
@@ -295,6 +298,15 @@ curl -X 'POST' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d "grant_type=password&username=${userpanel}&password=${passpanel}&scope=&client_id=&client_secret=" > /etc/data/token.json
 cd
+
+# restart all service
+systemctl enable nginx
+systemctl enable ufw
+systemctl restart nginx
+systemctl restart ufw
+sleep 2
+
+# latest install
 profile
 touch /root/log-install.txt
 echo "Untuk data login dashboard Marzban: " | tee -a /root/log-install.txt
@@ -303,9 +315,7 @@ echo "URL HTTPS : https://${domain}/dashboard" | tee -a /root/log-install.txt
 echo "username  : ${userpanel}" | tee -a /root/log-install.txt
 echo "password  : ${passpanel}" | tee -a /root/log-install.txt
 echo "-=================================-" | tee -a /root/log-install.txt
-echo "Jangan lupa join Channel & Grup Telegram saya juga di" | tee -a /root/log-install.txt
-echo "Telegram Channel: https://t.me/LingVPN" | tee -a /root/log-install.txt
-echo "Telegram Group: https://t.me/LingVPN_Group" | tee -a /root/log-install.txt
+echo "Telegram : https://t.me/after_sweet" | tee -a /root/log-install.txt
 echo "-=================================-" | tee -a /root/log-install.txt
 colorized_echo green "Script telah berhasil di install"
 rm /root/mar.sh
