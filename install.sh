@@ -110,6 +110,7 @@ fi
 mkdir -p /etc/data
 
 #domain
+clear
 read -rp "Masukkan Domain: " domain
 echo "$domain" > /etc/data/domain
 domain=$(cat /etc/data/domain)
@@ -183,34 +184,34 @@ timedatectl set-timezone Asia/Jakarta;
 sudo bash -c "$(curl -sL https://github.com/xsm-syn/Marzban-scripts/raw/master/marzban.sh)" @ install
 
 #Install Subs
-wget -N -P /var/lib/marzban/templates/subscription/  https://raw.githubusercontent.com/xsm-syn/MarLing/main/index.html
+wget -q -N -P /var/lib/marzban/templates/subscription/  https://raw.githubusercontent.com/xsm-syn/MarLing/main/index.html
 
 #install env
-wget -O /opt/marzban/.env "https://raw.githubusercontent.com/xsm-syn/MarLing/main/env"
+wget -q -O /opt/marzban/.env "https://raw.githubusercontent.com/xsm-syn/MarLing/main/env"
 
 #install core Xray & Assets folder
 mkdir -p /var/lib/marzban/assets
 mkdir -p /var/lib/marzban/core
-wget -O /var/lib/marzban/core/xray.zip "https://github.com/XTLS/Xray-core/releases/download/v1.8.24/Xray-linux-64.zip"  
+wget -q -O /var/lib/marzban/core/xray.zip "https://github.com/XTLS/Xray-core/releases/download/v1.8.24/Xray-linux-64.zip"  
 cd /var/lib/marzban/core && unzip xray.zip && chmod +x xray
 cd
 
 #profile
 echo -e 'profile' >> /root/.profile
-wget -O /usr/bin/profile "https://raw.githubusercontent.com/xsm-syn/MarLing/main/profile";
+wget -q -O /usr/bin/profile "https://raw.githubusercontent.com/xsm-syn/MarLing/main/profile";
 chmod +x /usr/bin/profile
 apt install neofetch -y
-wget -O /usr/bin/cekservice "https://raw.githubusercontent.com/xsm-syn/MarLing/main/cekservice.sh"
+wget -q -O /usr/bin/cekservice "https://raw.githubusercontent.com/xsm-syn/MarLing/main/cekservice.sh"
 chmod +x /usr/bin/cekservice
 
 #install compose
-wget -O /opt/marzban/docker-compose.yml "https://raw.githubusercontent.com/xsm-syn/MarLing/main/docker-compose.yml"
+wget -q -O /opt/marzban/docker-compose.yml "https://raw.githubusercontent.com/xsm-syn/MarLing/main/docker-compose.yml"
 
 #Install VNSTAT
 apt -y install vnstat
 /etc/init.d/vnstat restart
 apt -y install libsqlite3-dev
-wget https://github.com/xsm-syn/MarLing/raw/main/vnstat-2.6.tar.gz
+wget -q https://github.com/xsm-syn/MarLing/raw/main/vnstat-2.6.tar.gz
 tar zxvf vnstat-2.6.tar.gz
 cd vnstat-2.6
 ./configure --prefix=/usr --sysconfdir=/etc && make && make install 
@@ -229,26 +230,32 @@ sudo apt-get install speedtest -y
 mkdir -p /var/log/nginx
 touch /var/log/nginx/access.log
 touch /var/log/nginx/error.log
+
+: << 'EOF'
 #apt install nginx -y
 #wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/nginx.conf"
 #wget -O /etc/nginx/sites-available/default "https://raw.githubusercontent.com/xsm-syn/MarLing/main/vps.conf"
 #wget -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/xray.conf"
-wget -O /opt/marzban/nginx.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/nginx.conf"
-wget -O /opt/marzban/default.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/vps.conf"
-wget -O /opt/marzban/xray.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/xray.conf"
+EOF
+
+wget -q -O /opt/marzban/nginx.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/nginx.conf"
+wget -q -O /opt/marzban/default.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/vps.conf"
+wget -q -O /opt/marzban/xray.conf "https://raw.githubusercontent.com/xsm-syn/MarLing/main/xray.conf"
 mkdir -p /var/www/html
-echo "<pre>Setup by AutoScript LingVPN and Modded by @after_sweet</pre>" > /var/www/html/index.html
+echo "<pre>Setup by AutoScript @after_sweet</pre>" > /var/www/html/index.html
 
 #install socat
 apt install iptables -y
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion -y
 
+: << 'EOF'
 #install cert
 #curl https://get.acme.sh | sh -s email=$email
 #/root/.acme.sh/acme.sh --server letsencrypt --register-account -m $email --issue -d $domain --standalone -k ec-256 --debug
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /var/lib/marzban/xray.crt --keypath /var/lib/marzban/xray.key --ecc
 #wget -O /var/lib/marzban/xray_config.json "https://raw.githubusercontent.com/xsm-syn/MarLing/main/xray_config.json"
+EOF
 
 mkdir /root/.acme.sh
 curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
@@ -257,6 +264,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 /root/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /var/lib/marzban/xray.crt --keypath /var/lib/marzban/xray.key --ecc
+wget -q -O /var/lib/marzban/xray_config.json "https://raw.githubusercontent.com/xsm-syn/MarLing/main/xray_config.json"
 chown www-data:www-data /var/lib/marzban/xray.crt
 chown www-data:www-data /var/lib/marzban/xray.key
 
@@ -272,10 +280,10 @@ sudo ufw allow 1080/tcp
 sudo ufw allow 1080/udp
 
 #install database
-wget -O /var/lib/marzban/db.sqlite3 "https://github.com/xsm-syn/MarLing/raw/main/db.sqlite3"
+wget -q -O /var/lib/marzban/db.sqlite3 "https://github.com/xsm-syn/MarLing/raw/main/db.sqlite3"
 
 #install WARP Proxy
-wget -O /root/warp "https://raw.githubusercontent.com/hamid-gh98/x-ui-scripts/main/install_warp_proxy.sh"
+wget -q -O /root/warp "https://raw.githubusercontent.com/hamid-gh98/x-ui-scripts/main/install_warp_proxy.sh"
 sudo chmod +x /root/warp
 sudo bash /root/warp -y 
 
@@ -287,12 +295,10 @@ sed -i "s/# SUDO_USERNAME = \"admin\"/SUDO_USERNAME = \"${userpanel}\"/" /opt/ma
 sed -i "s/# SUDO_PASSWORD = \"admin\"/SUDO_PASSWORD = \"${passpanel}\"/" /opt/marzban/.env
 docker compose down && docker compose up -d
 #marzban cli admin import-from-env -y
-#sed -i "s/SUDO_USERNAME = \"${userpanel}\"/# SUDO_USERNAME = \"admin\"/" /opt/marzban/.env
-#sed -i "s/SUDO_PASSWORD = \"${passpanel}\"/# SUDO_PASSWORD = \"admin\"/" /opt/marzban/.env
 
-cd
-echo "Tunggu 5 detik untuk generate token API"
-sleep 5s
+cd && clear
+echo "Tunggu 15 detik untuk generate token API"
+sleep 15s
 
 #instal token
 curl -X 'POST' \
@@ -303,15 +309,13 @@ curl -X 'POST' \
 cd
 
 # restart all service
-systemctl enable nginx
 systemctl enable ufw
-systemctl restart nginx
 systemctl restart ufw
 sleep 2
 
 # latest install
-profile
 touch /root/log-install.txt
+profile
 echo "Untuk data login dashboard Marzban: " | tee -a /root/log-install.txt
 echo "-=================================-" | tee -a /root/log-install.txt
 echo "URL HTTPS : https://${domain}/dashboard" | tee -a /root/log-install.txt
@@ -321,8 +325,10 @@ echo "-=================================-" | tee -a /root/log-install.txt
 echo "Telegram : https://t.me/after_sweet" | tee -a /root/log-install.txt
 echo "-=================================-" | tee -a /root/log-install.txt
 colorized_echo green "Script telah berhasil di install"
-rm /root/mar.sh
-echo -e "[\e[1;31mWARNING\e[0m] Reboot sekali biar ga error lur [default y](y/n)? "
+
+marzban cli admin delete -u admin -y
+
+echo -e "[\e[1;31mWARNING\e[0m] Silahkan reboot server [default y](y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
 exit 0
