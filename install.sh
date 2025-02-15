@@ -229,13 +229,13 @@ sudo apt-get install speedtest -y
 mkdir -p /var/log/nginx
 touch /var/log/nginx/access.log
 touch /var/log/nginx/error.log
-apt install nginx -y
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
-wget -O /etc/nginx/sites-available/default "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
-wget -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
-#wget -O /opt/marzban/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
-#wget -O /opt/marzban/default.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
-#wget -O /opt/marzban/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
+#apt install nginx -y
+#wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
+#wget -O /etc/nginx/sites-available/default "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
+#wget -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
+wget -O /opt/marzban/nginx.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/nginx.conf"
+wget -O /opt/marzban/default.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/vps.conf"
+wget -O /opt/marzban/xray.conf "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray.conf"
 mkdir -p /var/www/html
 echo "<pre>Setup by AutoScript LingVPN and Modded by @after_sweet</pre>" > /var/www/html/index.html
 
