@@ -4,8 +4,8 @@ UVICORN_PORT = 7879
 
 ## We highly recommend add admin using `marzban cli` tool and do not use
 ## the following variables which is somehow hard codded infrmation.
-SUDO_USERNAME = "admin132"
-SUDO_PASSWORD = "admin132"
+#SUDO_USERNAME = "admin"
+#SUDO_PASSWORD = "admin"
 
 # UVICORN_UDS: "/run/marzban.socket"
 # UVICORN_SSL_CERTFILE = "/var/lib/marzban/xray.crt"
