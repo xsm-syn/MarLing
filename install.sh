@@ -115,7 +115,7 @@ echo "$domain" > /etc/data/domain
 domain=$(cat /etc/data/domain)
 
 #email
-read -rp "Masukkan Email anda: " email
+#read -rp "Masukkan Email anda: " email
 
 #username
 while true; do
@@ -250,12 +250,15 @@ apt install socat cron bash-completion -y
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /var/lib/marzban/xray.crt --keypath /var/lib/marzban/xray.key --ecc
 #wget -O /var/lib/marzban/xray_config.json "https://raw.githubusercontent.com/GawrAme/MarLing/main/xray_config.json"
 
+mkdir /root/.acme.sh
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 /root/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /var/lib/marzban/xray.crt --keypath /var/lib/marzban/xray.key --ecc
-chown www-data:www-data /etc/xray/xray.key
-chown www-data:www-data /etc/xray/xray.crt
+chown www-data:www-data /var/lib/marzban/xray.crt
+chown www-data:www-data /var/lib/marzban/xray.key
 
 #install firewall
 apt install ufw -y
